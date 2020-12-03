@@ -16,7 +16,6 @@ class ArticleController extends AbstractController
     public function homepage() {
         return new Response('mooi');
     }
-
     /**
      * @Route("/news/{slug}")
      */
