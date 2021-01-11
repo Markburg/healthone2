@@ -18,6 +18,12 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+    public function getNoAfdeling() {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT u FROM App:User u WHERE u.afdeling IS NULL");
+
+        return $query->getResult();
+    }
 
     // /**
     //  * @return User[] Returns an array of User objects

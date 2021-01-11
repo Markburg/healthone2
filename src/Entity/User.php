@@ -42,6 +42,11 @@ class User
      */
     private $salaris;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Afdeling::class, inversedBy="users")
+     */
+    private $afdeling;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class User
     public function setSalaris(string $salaris): self
     {
         $this->salaris = $salaris;
+
+        return $this;
+    }
+
+    public function getAfdeling(): ?afdeling
+    {
+        return $this->afdeling;
+    }
+
+    public function setAfdeling(?afdeling $afdeling): self
+    {
+        $this->afdeling = $afdeling;
 
         return $this;
     }
