@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
  */
 class User
 {
@@ -19,19 +18,9 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=255)
      */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private $prefix;
-
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $lastname;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -39,47 +28,33 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="json")
      */
-    private $email;
+    private $roles = [];
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $naam;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     */
+    private $salaris;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFirstname(): ?string
+    public function getUsername(): ?string
     {
-        return $this->firstname;
+        return $this->username;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setUsername(string $username): self
     {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getPrefix(): ?string
-    {
-        return $this->prefix;
-    }
-
-    public function setPrefix(?string $prefix): self
-    {
-        $this->prefix = $prefix;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): self
-    {
-        $this->lastname = $lastname;
+        $this->username = $username;
 
         return $this;
     }
@@ -96,14 +71,38 @@ class User
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getRoles(): ?array
     {
-        return $this->email;
+        return $this->roles;
     }
 
-    public function setEmail(string $email): self
+    public function setRoles(array $roles): self
     {
-        $this->email = $email;
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getNaam(): ?string
+    {
+        return $this->naam;
+    }
+
+    public function setNaam(string $naam): self
+    {
+        $this->naam = $naam;
+
+        return $this;
+    }
+
+    public function getSalaris(): ?string
+    {
+        return $this->salaris;
+    }
+
+    public function setSalaris(string $salaris): self
+    {
+        $this->salaris = $salaris;
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Medicijn;
+use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,5 +20,4 @@ class ArticleController extends AbstractController
     {
         return $this->render('article/homepage.html.twig');
     }
-
 }
