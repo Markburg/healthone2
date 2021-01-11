@@ -21,7 +21,7 @@ class HomeController extends AbstractController
      */
     public function homepage()
     {
-        return $this->render('article/homepage.html.twig');
+        return $this->render('pagina/homepage.html.twig');
     }
 
     /** * @Route("/create", name="create") */
@@ -51,6 +51,6 @@ class HomeController extends AbstractController
     /** * @Route("/getnoafdeling", name="no_afdeling") */
     public function getNoAfdeling() {
         $users = $this->getDoctrine()->getRepository(User::class)->getNoAfdeling();
-        return $this->render('article/geenAfdeling.html.twig', ['users'=>$users]);
+        return $this->render('pagina/geenAfdeling.html.twig', ['users'=>$users]);
     }
 }

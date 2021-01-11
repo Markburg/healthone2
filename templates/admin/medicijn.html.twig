@@ -1,0 +1,16 @@
+{% extends'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Medicijnen</h1>
+
+                {{ form_start(medicijnForm, {'attr': {'novalidate': 'novatidate'}}) }}
+                {{ form_widget(medicijnForm) }}
+
+                <button type="submit" class="btn btn-primary">Save</button>
+                {{ form_end(medicijnForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
