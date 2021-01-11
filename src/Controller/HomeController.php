@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Afdeling;
 use App\Entity\Medicijn;
 use App\Entity\User;
+use App\Form\AfdelingType;
+use http\Env\Request;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
