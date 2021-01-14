@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section>
+        <article>
+            <h3>Er zijn {{ patienten|length }} patienten</h3>
+            <tr>
+                <td>naam</td>
+                <td>adres</td>
+                <td>postcode</td>
+                <td>woonplaats</td>
+            </tr>
+        </article>
+    </section>
+
+{% endblock %}

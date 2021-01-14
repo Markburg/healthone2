@@ -4,8 +4,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Medicijn;
 use App\Form\AfdelingType;
-use App\Form\MedcijnType;
+use App\Form\MedicijnType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ class AdminController extends AbstractController
 {
     /** *@Route("/medicijn/new", name="medicijn_new") */
     public function newMedicijn(Request $request){
-        $form = $this->createForm(MedcijnType::class);
+        $form = $this->createForm(MedicijnType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -27,7 +28,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_homepage');
         }
 
-        return $this->render('admin/medicijn.html.twig', ['medicijnForm'=>$form->createView()]);
+        return $this->render('admin/new_medicijn.html.twig', ['medicijnForm'=>$form->createView()]);
     }
 
     /** *@Route("/afdeling/new", name="afdeling_new") */

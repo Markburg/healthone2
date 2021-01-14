@@ -18,6 +18,12 @@ class MedicijnRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Medicijn::class);
     }
+    public function getMedicijnen() {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT d FROM App:Medicijn d");
+
+        return $query->getResult();
+    }
 
     // /**
     //  * @return Medicijn[] Returns an array of Medicijn objects
