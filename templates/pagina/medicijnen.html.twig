@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for msg in app.session.flashBag.get('succes') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
             <section>
                 <article>
                     <h3>Er zijn {{ medicijnen|length }} medicijnen</h3>
@@ -20,12 +25,18 @@
                             <td> {{medicijn.type }} </td>
                             <td> {{medicijn.bijwerking }} </td>
                             <td> {{medicijn.verzekerd }} </td>
-                            <td><button type="button" class="btn btn-danger">bewerken</button></td>
+                            <td><a href="{{ path('medicijn_edit', {
+                                    id: medicijn.id
+                                }) }}">
+                                    <button class="btn btn-danger">Bewerken</button>
+                                </a></td>
                             <td><button type="button" class="btn btn-danger">Verwijderen</button></td>
                         </tr>
                     {% endfor %}
                             </table>
-                    <button class="btn btn-danger" href="{{ path('medicijn_new') }}">Toevoegen</button>
+                    <a href="{{ path('medicijn_new') }}">
+                        <button class="btn btn-danger">Toevoegen</button>
+                    </a>
                         </article>
                     </section>
 {% endblock %}

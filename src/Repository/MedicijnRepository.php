@@ -24,6 +24,12 @@ class MedicijnRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+    public function deleteMedicijnen(){
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("DELETE FROM App:Medicijn d");
+
+        return $query->getResult();
+    }
 
     // /**
     //  * @return Medicijn[] Returns an array of Medicijn objects

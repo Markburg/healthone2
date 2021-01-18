@@ -33,7 +33,7 @@ class Medicijn
     private $bijwerking;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      */
     private $verzekerd;
 
@@ -78,12 +78,12 @@ class Medicijn
         return $this;
     }
 
-    public function getVerzekerd(): ?bool
+    public function getVerzekerd(): ?string
     {
         return $this->verzekerd;
     }
 
-    public function setVerzekerd(bool $verzekerd): self
+    public function setVerzekerd(string $verzekerd): self
     {
         $this->verzekerd = $verzekerd;
 

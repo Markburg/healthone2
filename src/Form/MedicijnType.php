@@ -22,8 +22,8 @@ class MedicijnType extends AbstractType
             ->add('bijwerking', TextType::class)
             ->add('verzekerd', ChoiceType::class,[
                 'choices'=>[
-                    'Ja'=>'true',
-                    'nee'=>'false'
+                    'Ja'=>'Ja',
+                    'Nee'=>'Nee'
                     ]
                 ])
             ->add('submit',SubmitType::class);

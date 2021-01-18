@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Medicijn;
 use App\Form\AfdelingType;
 use App\Form\MedicijnType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,10 +26,27 @@ class AdminController extends AbstractController
             $em->flush();
             $this->addFlash('succes','Medicijn gemaakt!');
 
-            return $this->redirectToRoute('app_homepage');
+            return $this->redirectToRoute('medicijnen');
         }
 
         return $this->render('admin/new_medicijn.html.twig', ['medicijnForm'=>$form->createView()]);
+    }
+    /** *@Route("/medicijn/{id}/edit", name="medicijn_edit") */
+    public function editMedicijn(Medicijn $medicijn,Request $request, EntityManagerInterface $em) {
+        $form = $this->createForm(MedicijnType::class, $medicijn);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($medicijn);
+            $em->flush();
+            $this->addFlash('succes','Medicijn Update!');
+
+            return $this->redirectToRoute('medicijnen',[
+                'id'=>$medicijn->getId(),
+            ]);
+        }
+
+        return $this->render('admin/edit_medicijn.html.twig', ['medicijnForm'=>$form->createView()]);
     }
 
     /** *@Route("/afdeling/new", name="afdeling_new") */
