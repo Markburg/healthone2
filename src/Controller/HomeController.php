@@ -8,7 +8,6 @@ use App\Entity\Patient;
 use App\Entity\User;
 use App\Form\AfdelingType;
 use App\Form\PatientType;
-use http\Env\Request;
 use phpDocumentor\Reflection\Types\This;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -69,24 +68,6 @@ class HomeController extends AbstractController
         $medicijnen = $this->getDoctrine()->getRepository(Medicijn::class)->getMedicijnen();
         return $this->render('pagina/medicijnen.html.twig', ['medicijnen' => $medicijnen]);
     }
-
-    /**
-     * @Route ("/patient/add"), name="patient_add")
-     * @return Response
-     */
-    public function addPatientAction(\Symfony\Component\HttpFoundation\Request $request): Response
-    {
-        $patient = new Patient();
-        $form = $this->createForm(PatientType::class, $patient);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            //TODO
-
-        }
-        return $this->render('pagina/addpatient.html.twig', ['form' => $form->createView(),
-        ]);
-    }
-
     /**
      * @Route ("/patienten"), name="patienten")
      * @return Response

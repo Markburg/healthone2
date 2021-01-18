@@ -1,16 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for msg in app.session.flashBag.get('succes') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
     <section>
         <article>
             <h3>Er zijn {{ patienten|length }} patienten</h3>
-            <tr>
-                <td>naam</td>
-                <td>adres</td>
-                <td>postcode</td>
-                <td>woonplaats</td>
-            </tr>
+            <table class="table">
+                <thead>
+                <tbody>
+                <tr>
+                    <td> naam </td>
+                    <td> adress </td>
+                    <td> postcode </td>
+                    <td> woonplaats </td>
+                </tr>
+                </tbody>
+                {% for patient in patienten %}
+                    <tr>
+                        <td> {{patient.naam }} </td>
+                        <td> {{patient.adress }} </td>
+                        <td> {{patient.postcode }} </td>
+                        <td> {{patient.woonplaats }} </td>
+                        <td><a href="{{ path('medicijn_edit', {
+                                id: patient.id
+                            }) }}">
+                                <button class="btn btn-danger">Bewerken</button>
+                            </a></td>
+                        <td><a href="{{ path('delete_medicijn', {
+                                id: patient.id
+                            }) }}">
+                                <button class="btn btn-danger">Verwijderen</button>
+                            </a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <a href="{{ path('app_admin_addpatient') }}">
+                <button class="btn btn-danger">Toevoegen</button>
+            </a>
         </article>
     </section>
-
 {% endblock %}

@@ -5,11 +5,14 @@ namespace App\Controller;
 
 
 use App\Entity\Medicijn;
+use App\Entity\Patient;
 use App\Form\AfdelingType;
 use App\Form\MedicijnType;
+use App\Form\PatientType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
@@ -84,6 +87,26 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/new_afdeling.html.twig', ['afdelingForm'=>$form->createView()]);
+    }
+    /**
+     * @Route ("/patient/add"), name="patient_add")
+     */
+    public function addPatientAction(Request $request): Response
+    {
+        $form = $this->createForm(PatientType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $patient = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($patient);
+            $em->flush();
+            $this->addFlash('succes','Patient gemaakt!');
+
+            return $this->redirectToRoute('app_home_patienten');
+        }
+        return $this->render('pagina/addpatient.html.twig', ['patientForm' => $form->createView(),
+        ]);
     }
 
 }
