@@ -30,7 +30,11 @@
                                 }) }}">
                                     <button class="btn btn-danger">Bewerken</button>
                                 </a></td>
-                            <td><button type="button" class="btn btn-danger">Verwijderen</button></td>
+                            <td><a href="{{ path('delete_medicijn', {
+                                    id: medicijn.id
+                                }) }}">
+                                    <button class="btn btn-danger">Verwijderen</button>
+                                </a></td>
                         </tr>
                     {% endfor %}
                             </table>

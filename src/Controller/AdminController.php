@@ -48,6 +48,25 @@ class AdminController extends AbstractController
 
         return $this->render('admin/edit_medicijn.html.twig', ['medicijnForm'=>$form->createView()]);
     }
+    /** * @Route("/medicijnen/delete/{id}", name="delete_medicijn") */
+    public function deleteMedicijn($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (!$id)
+        {
+            throw $this->createNotFoundException('No ID found');
+        }
+        $medicijn = $em->getRepository(Medicijn::class)->Find($id);
+
+        if($medicijn != null)
+        {
+            $em->remove($medicijn);
+            $em->flush();
+            $this->addFlash('succes','Medicijn is verwijderd!');
+        }
+
+        return $this->redirectToRoute('medicijnen');
+    }
 
     /** *@Route("/afdeling/new", name="afdeling_new") */
     public function newAfdeling(Request $request){
