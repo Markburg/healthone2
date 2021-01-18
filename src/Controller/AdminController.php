@@ -91,7 +91,7 @@ class AdminController extends AbstractController
     /**
      * @Route ("/patient/add"), name="patient_add")
      */
-    public function addPatientAction(Request $request): Response
+    public function newPatient(Request $request): Response
     {
         $form = $this->createForm(PatientType::class);
         $form->handleRequest($request);
@@ -105,7 +105,7 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('app_home_patienten');
         }
-        return $this->render('pagina/addpatient.html.twig', ['patientForm' => $form->createView(),
+        return $this->render('admin/new_patient.html.twig', ['patientForm' => $form->createView(),
         ]);
     }
     /** *@Route("/patient/{id}/edit", name="patient_edit") */
