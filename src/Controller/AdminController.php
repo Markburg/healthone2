@@ -108,5 +108,22 @@ class AdminController extends AbstractController
         return $this->render('pagina/addpatient.html.twig', ['patientForm' => $form->createView(),
         ]);
     }
+    /** *@Route("/patient/{id}/edit", name="patient_edit") */
+    public function editPatient(Patient $patient,Request $request, EntityManagerInterface $em) {
+        $form = $this->createForm(PatientType::class, $patient);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($patient);
+            $em->flush();
+            $this->addFlash('succes','Patient Update!');
+
+            return $this->redirectToRoute('app_home_patienten',[
+                'id'=>$patient->getId(),
+            ]);
+        }
+
+        return $this->render('admin/edit_patient.html.twig', ['patientForm'=>$form->createView()]);
+    }
 
 }

@@ -1,0 +1,17 @@
+{% extends'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Pas de patient aan</h1>
+
+                {{ form_start(patientForm, {'attr': {'novalidate': 'novatidate'}}) }}
+                {{ form_row(patientForm.naam) }}
+                {{ form_row(patientForm.adress) }}
+                {{ form_row(patientForm.postcode) }}
+                {{ form_row(patientForm.woonplaats) }}
+                {{ form_end(patientForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
