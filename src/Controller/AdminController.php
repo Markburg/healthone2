@@ -6,9 +6,11 @@ namespace App\Controller;
 
 use App\Entity\Medicijn;
 use App\Entity\Patient;
+use App\Entity\Recept;
 use App\Form\AfdelingType;
 use App\Form\MedicijnType;
 use App\Form\PatientType;
+use App\Form\ReceptType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,7 +91,7 @@ class AdminController extends AbstractController
         return $this->render('admin/new_afdeling.html.twig', ['afdelingForm'=>$form->createView()]);
     }
     /**
-     * @Route ("/patient/add"), name="patient_add")
+     * @Route ("/patient/new"), name="patient_new")
      */
     public function newPatient(Request $request): Response
     {
@@ -124,6 +126,80 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/edit_patient.html.twig', ['patientForm'=>$form->createView()]);
+    }
+    /** * @Route("/patient/delete/{id}", name="delete_patient") */
+    public function deletePatient($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (!$id)
+        {
+            throw $this->createNotFoundException('No ID found');
+        }
+        $patient = $em->getRepository(Patient::class)->Find($id);
+
+        if($patient != null)
+        {
+            $em->remove($patient);
+            $em->flush();
+            $this->addFlash('succes','patient is verwijderd!');
+        }
+
+        return $this->redirectToRoute('app_home_patienten');
+    }
+    /**
+     * @Route ("/recept/new"), name="recept_new")
+     */
+    public function newRecept(Request $request): Response
+    {
+        $form = $this->createForm(ReceptType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $recept = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($recept);
+            $em->flush();
+            $this->addFlash('succes','Recept gemaakt!');
+
+            return $this->redirectToRoute('app_home_recepten');
+        }
+        return $this->render('admin/new_recept.html.twig', ['receptForm' => $form->createView(),
+        ]);
+    }
+    /** *@Route("/recept/{id}/edit", name="recept_edit") */
+    public function editRecept(Recept $recept,Request $request, EntityManagerInterface $em) {
+        $form = $this->createForm(ReceptType::class, $recept);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($recept);
+            $em->flush();
+            $this->addFlash('succes','Recept Update!');
+
+            return $this->redirectToRoute('app_home_recepten',[
+                'id'=>$recept->getId(),
+            ]);
+        }
+
+        return $this->render('admin/edit_recept.html.twig', ['receptForm'=>$form->createView()]);
+    }
+    public function deleteRecept($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if (!$id)
+        {
+            throw $this->createNotFoundException('No ID found');
+        }
+        $recept = $em->getRepository(Recept::class)->Find($id);
+
+        if($recept != null)
+        {
+            $em->remove($recept);
+            $em->flush();
+            $this->addFlash('succes','recept is verwijderd!');
+        }
+
+        return $this->redirectToRoute('app_home_recepten');
     }
 
 }

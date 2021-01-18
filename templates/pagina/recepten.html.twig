@@ -8,37 +8,37 @@
     {% endfor %}
     <section>
         <article>
-            <h3>Er zijn {{ patienten|length }} patienten</h3>
+            <h3>Er zijn {{ recepten|length }} recepten</h3>
             <table class="table">
                 <thead>
                 <tbody>
                 <tr>
-                    <td> naam </td>
-                    <td> adress </td>
-                    <td> postcode </td>
-                    <td> woonplaats </td>
+                    <td> patient </td>
+                    <td> medicijn </td>
+                    <td> datum </td>
+                    <td> periode </td>
                 </tr>
                 </tbody>
-                {% for patient in patienten %}
+                {% for recept in recepten %}
                     <tr>
-                        <td> {{patient.naam }} </td>
-                        <td> {{patient.adress }} </td>
-                        <td> {{patient.postcode }} </td>
-                        <td> {{patient.woonplaats }} </td>
-                        <td><a href="{{ path('patient_edit', {
-                                id: patient.id
+                        <td> {{recept.patient }} </td>
+                        <td> {{recept.medicijn }} </td>
+                        <td> {{recept.datum }} </td>
+                        <td> {{recept.periode }} </td>
+                        <td><a href="{{ path('recept_edit', {
+                                id: recept.id
                             }) }}">
                                 <button class="btn btn-danger">Bewerken</button>
                             </a></td>
                         <td><a href="{{ path('delete_medicijn', {
-                                id: patient.id
+                                id: recept.id
                             }) }}">
                                 <button class="btn btn-danger">Verwijderen</button>
                             </a></td>
                     </tr>
                 {% endfor %}
             </table>
-            <a href="{{ path('app_admin_newpatient') }}">
+            <a href="{{ path('app_admin_newrecept') }}">
                 <button class="btn btn-danger">Toevoegen</button>
             </a>
         </article>

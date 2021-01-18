@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReceptRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass=ReceptRepository::class)
@@ -17,15 +18,7 @@ class Recept
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $medicijn;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $datum;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,6 +30,17 @@ class Recept
      * @ORM\JoinColumn(nullable=false)
      */
     private $patient;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Medicijn::class, inversedBy="recepts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $medicijn;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $datum;
 
     public function getId(): ?int
     {
@@ -51,18 +55,6 @@ class Recept
     public function setMedicijn(string $medicijn): self
     {
         $this->medicijn = $medicijn;
-
-        return $this;
-    }
-
-    public function getDatum(): ?string
-    {
-        return $this->datum;
-    }
-
-    public function setDatum(string $datum): self
-    {
-        $this->datum = $datum;
 
         return $this;
     }
@@ -87,6 +79,18 @@ class Recept
     public function setPatient(?Patient $patient): self
     {
         $this->patient = $patient;
+
+        return $this;
+    }
+
+    public function getDatum(): ?String
+    {
+        return $this->datum;
+    }
+
+    public function setDatum(String $datum): self
+    {
+        $this->datum = $datum;
 
         return $this;
     }

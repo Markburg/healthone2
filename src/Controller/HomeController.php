@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Afdeling;
 use App\Entity\Medicijn;
 use App\Entity\Patient;
+use App\Entity\Recept;
 use App\Entity\User;
 use App\Form\AfdelingType;
 use App\Form\PatientType;
@@ -77,6 +78,17 @@ class HomeController extends AbstractController
         $patienten = $this->getDoctrine()->getRepository(Patient::class)->findAll();
         return $this->render('pagina/patienten.html.twig', [
             'patienten' => $patienten,
+        ]);
+    }
+    /**
+     * @Route ("/recepten"), name="recepten")
+     * @return Response
+     */
+    public function receptenAction(): Response
+    {
+        $recepten = $this->getDoctrine()->getRepository(Recept::class)->findAll();
+        return $this->render('pagina/recepten.html.twig', [
+            'recepten' => $recepten,
         ]);
     }
 }
