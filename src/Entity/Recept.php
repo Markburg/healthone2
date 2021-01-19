@@ -47,12 +47,12 @@ class Recept
         return $this->id;
     }
 
-    public function getMedicijn(): ?string
+    public function getMedicijn(): ?Medicijn
     {
         return $this->medicijn;
     }
 
-    public function setMedicijn(string $medicijn): self
+    public function setMedicijn(Medicijn $medicijn): self
     {
         $this->medicijn = $medicijn;
 
