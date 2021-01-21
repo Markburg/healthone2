@@ -25,12 +25,12 @@
                         <td> {{recept.medicijn }} </td>
                         <td> {{recept.datum }} </td>
                         <td> {{recept.periode }} </td>
-                        <td><a href="{{ path('recept_edit', {
+                        <td><a href="{{ path('arts_recept_edit', {
                                 id: recept.id
                             }) }}">
                                 <button class="btn btn-danger">Bewerken</button>
                             </a></td>
-                        <td><a href="{{ path('delete_medicijn', {
+                        <td><a href="{{ path('arts_recept_delete', {
                                 id: recept.id
                             }) }}">
                                 <button class="btn btn-danger">Verwijderen</button>
@@ -38,7 +38,7 @@
                     </tr>
                 {% endfor %}
             </table>
-            <a href="{{ path('app_admin_newrecept') }}">
+            <a href="{{ path('app_arts_newrecept') }}">
                 <button class="btn btn-danger">Toevoegen</button>
             </a>
         </article>

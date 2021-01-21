@@ -25,12 +25,12 @@
                             <td> {{medicijn.type }} </td>
                             <td> {{medicijn.bijwerking }} </td>
                             <td> {{medicijn.verzekerd }} </td>
-                            <td><a href="{{ path('medicijn_edit', {
+                            <td><a href="{{ path('medewerker_medicijn_edit', {
                                     id: medicijn.id
                                 }) }}">
                                     <button class="btn btn-danger">Bewerken</button>
                                 </a></td>
-                            <td><a href="{{ path('delete_medicijn', {
+                            <td><a href="{{ path('medewerker_delete_medicijn', {
                                     id: medicijn.id
                                 }) }}">
                                     <button class="btn btn-danger">Verwijderen</button>
@@ -38,7 +38,7 @@
                         </tr>
                     {% endfor %}
                             </table>
-                    <a href="{{ path('medicijn_new') }}">
+                    <a href="{{ path('medewerker_medicijn_new') }}">
                         <button class="btn btn-danger">Toevoegen</button>
                     </a>
                         </article>
