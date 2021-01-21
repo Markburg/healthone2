@@ -19,14 +19,6 @@ use Twig\Environment;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_homepage")
-     */
-    public function homepage()
-    {
-        return $this->render('pagina/homepage.html.twig');
-    }
-
     /** * @Route("/create", name="create") */
     public function createAction()
     {
