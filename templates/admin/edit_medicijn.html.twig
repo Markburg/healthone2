@@ -1,0 +1,17 @@
+{% extends'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Pas het medicijn aan</h1>
+
+                {{ form_start(medicijnForm, {'attr': {'novalidate': 'novatidate'}}) }}
+                {{ form_row(medicijnForm.naam) }}
+                {{ form_row(medicijnForm.type) }}
+                {{ form_row(medicijnForm.bijwerking) }}
+                {{ form_row(medicijnForm.verzekerd) }}
+                {{ form_end(medicijnForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

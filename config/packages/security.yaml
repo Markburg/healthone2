@@ -36,3 +36,4 @@ security:
     access_control:
          - { path: ^/arts, roles: ROLE_ARTS }
          - { path: ^/medewerker, roles: ROLE_MEDEWERKER }
+         - { path: ^/admin, roles: ROLE_ADMIN }

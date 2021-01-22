@@ -18,6 +18,12 @@ class PatientRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Patient::class);
     }
+    public function getPatienten() {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT d FROM App:Patient d");
+
+        return $query->getResult();
+    }
 
     // /**
     //  * @return Patient[] Returns an array of Patient objects

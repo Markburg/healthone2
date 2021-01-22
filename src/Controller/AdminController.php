@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Entity\Medicijn;
 use App\Entity\Patient;
 use App\Entity\Recept;
-use App\Form\AfdelingType;
 use App\Form\MedicijnType;
 use App\Form\PatientType;
 use App\Form\ReceptType;
@@ -19,7 +18,39 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    /** *@Route("/medicijn/new", name="medicijn_new") */
+    /**
+     * @Route("/admin", name="admin_home")
+     */
+    public function index(): Response
+    {
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+    /**
+     * @Route ("/admin/recepten"), name="admin_recepten")
+     * @return Response
+     */
+    public function receptenAction(): Response
+    {
+        $recepten = $this->getDoctrine()->getRepository(Recept::class)->findAll();
+        return $this->render('admin/recepten.html.twig', [
+            'recepten' => $recepten,
+        ]);
+    }
+    /** * @Route("/admin/medicijnen", name="admin_medicijnen") */
+    public function getMedicijnen()
+    {
+        $medicijnen = $this->getDoctrine()->getRepository(Medicijn::class)->getMedicijnen();
+        return $this->render('admin/medicijnen.html.twig', ['medicijnen' => $medicijnen]);
+    }
+    /** * @Route("/admin/patienten", name="admin_patienten") */
+    public function getPatienten()
+    {
+        $patienten = $this->getDoctrine()->getRepository(Patient::class)->getPatienten();
+        return $this->render('admin/patienten.html.twig', ['patienten' => $patienten]);
+    }
+    /** *@Route("/admin/medicijn/new", name="admin_medicijn_new") */
     public function newMedicijn(Request $request){
         $form = $this->createForm(MedicijnType::class);
         $form->handleRequest($request);
@@ -31,12 +62,12 @@ class AdminController extends AbstractController
             $em->flush();
             $this->addFlash('succes','Medicijn gemaakt!');
 
-            return $this->redirectToRoute('medicijnen');
+            return $this->redirectToRoute('admin_medicijnen');
         }
 
         return $this->render('admin/new_medicijn.html.twig', ['medicijnForm'=>$form->createView()]);
     }
-    /** *@Route("/medicijn/{id}/edit", name="medicijn_edit") */
+    /** *@Route("/admin/medicijn/{id}/edit", name="admin_medicijn_edit") */
     public function editMedicijn(Medicijn $medicijn,Request $request, EntityManagerInterface $em) {
         $form = $this->createForm(MedicijnType::class, $medicijn);
         $form->handleRequest($request);
@@ -46,14 +77,14 @@ class AdminController extends AbstractController
             $em->flush();
             $this->addFlash('succes','Medicijn Update!');
 
-            return $this->redirectToRoute('medicijnen',[
+            return $this->redirectToRoute('admin_medicijn_edit',[
                 'id'=>$medicijn->getId(),
             ]);
         }
 
         return $this->render('admin/edit_medicijn.html.twig', ['medicijnForm'=>$form->createView()]);
     }
-    /** * @Route("/medicijnen/delete/{id}", name="delete_medicijn") */
+    /** * @Route("/admin/medicijnen/delete/{id}", name="admin_delete_medicijn") */
     public function deleteMedicijn($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -70,28 +101,10 @@ class AdminController extends AbstractController
             $this->addFlash('succes','Medicijn is verwijderd!');
         }
 
-        return $this->redirectToRoute('medicijnen');
-    }
-
-    /** *@Route("/afdeling/new", name="afdeling_new") */
-    public function newAfdeling(Request $request){
-        $form = $this->createForm(AfdelingType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $afdeling = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($afdeling);
-            $em->flush();
-            $this->addFlash('succes','Afdeling gemaakt!');
-
-            return $this->redirectToRoute('app_homepage');
-        }
-
-        return $this->render('admin/new_afdeling.html.twig', ['afdelingForm'=>$form->createView()]);
+        return $this->redirectToRoute('admin_medicijnen');
     }
     /**
-     * @Route ("/patient/new"), name="patient_new")
+     * @Route ("/admin/patient/new"), name="admin_patient_new")
      */
     public function newPatient(Request $request): Response
     {
@@ -105,12 +118,12 @@ class AdminController extends AbstractController
             $em->flush();
             $this->addFlash('succes','Patient gemaakt!');
 
-            return $this->redirectToRoute('app_home_patienten');
+            return $this->redirectToRoute('admin_patienten');
         }
         return $this->render('admin/new_patient.html.twig', ['patientForm' => $form->createView(),
         ]);
     }
-    /** *@Route("/patient/{id}/edit", name="patient_edit") */
+    /** *@Route("/admin/patient/{id}/edit", name="admin_patient_edit") */
     public function editPatient(Patient $patient,Request $request, EntityManagerInterface $em) {
         $form = $this->createForm(PatientType::class, $patient);
         $form->handleRequest($request);
@@ -120,14 +133,14 @@ class AdminController extends AbstractController
             $em->flush();
             $this->addFlash('succes','Patient Update!');
 
-            return $this->redirectToRoute('app_home_patienten',[
+            return $this->redirectToRoute('admin_patienten',[
                 'id'=>$patient->getId(),
             ]);
         }
 
         return $this->render('admin/edit_patient.html.twig', ['patientForm'=>$form->createView()]);
     }
-    /** * @Route("/patient/delete/{id}", name="delete_patient") */
+    /** * @Route("/admin/patient/delete/{id}", name="admin_delete_patient") */
     public function deletePatient($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -144,10 +157,10 @@ class AdminController extends AbstractController
             $this->addFlash('succes','patient is verwijderd!');
         }
 
-        return $this->redirectToRoute('app_home_patienten');
+        return $this->redirectToRoute('admin_patienten');
     }
     /**
-     * @Route ("/recept/new"), name="recept_new")
+     * @Route ("/admin/recept/new"), name="admin_recept_new")
      */
     public function newRecept(Request $request): Response
     {
@@ -161,12 +174,12 @@ class AdminController extends AbstractController
             $em->flush();
             $this->addFlash('succes','Recept gemaakt!');
 
-            return $this->redirectToRoute('app_home_recepten');
+            return $this->redirectToRoute('admin_patienten');
         }
         return $this->render('admin/new_recept.html.twig', ['receptForm' => $form->createView(),
         ]);
     }
-    /** *@Route("/recept/{id}/edit", name="recept_edit") */
+    /** *@Route("/admin/recept/{id}/edit", name="admin_recept_edit") */
     public function editRecept(Recept $recept,Request $request, EntityManagerInterface $em) {
         $form = $this->createForm(ReceptType::class, $recept);
         $form->handleRequest($request);
@@ -176,13 +189,14 @@ class AdminController extends AbstractController
             $em->flush();
             $this->addFlash('succes','Recept Update!');
 
-            return $this->redirectToRoute('app_home_recepten',[
+            return $this->redirectToRoute('admin_patienten',[
                 'id'=>$recept->getId(),
             ]);
         }
 
         return $this->render('admin/edit_recept.html.twig', ['receptForm'=>$form->createView()]);
     }
+    /** *@Route("/admin/recept/delete/{id}", name="admin_recept_delete") */
     public function deleteRecept($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -199,7 +213,7 @@ class AdminController extends AbstractController
             $this->addFlash('succes','recept is verwijderd!');
         }
 
-        return $this->redirectToRoute('app_home_recepten');
+        return $this->redirectToRoute('admin_patienten');
     }
 
 }

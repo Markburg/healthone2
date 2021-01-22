@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <body>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
+    <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_home') }}">Healthone</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_medicijnen') }}">Medicijnen</a>
+    <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('app_admin_recepten') }}">Recepten</a>
+    <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_patienten') }}">Patienten</a>
+</nav>
+    {% for msg in app.session.flashBag.get('succes') %}
+        <div class="alert alert-success">
+            {{ msg }}
+        </div>
+    {% endfor %}
+            <section>
+                <article>
+                    <h3>Er zijn {{ medicijnen|length }} medicijnen</h3>
+                    <table class="table">
+                        <thead>
+                            <tbody>
+                            <tr>
+                                <td> naam </td>
+                                <td> werking </td>
+                                <td> bijwerking </td>
+                                <td> Verzekerd </td>
+                            </tr>
+                        </tbody>
+                    {% for medicijn in medicijnen %}
+                        <tr>
+                            <td> {{medicijn.naam }} </td>
+                            <td> {{medicijn.type }} </td>
+                            <td> {{medicijn.bijwerking }} </td>
+                            <td> {{medicijn.verzekerd }} </td>
+                            <td><a href="{{ path('medewerker_medicijn_edit', {
+                                    id: medicijn.id
+                                }) }}">
+                                    <button class="btn btn-danger">Bewerken</button>
+                                </a></td>
+                            <td><a href="{{ path('medewerker_delete_medicijn', {
+                                    id: medicijn.id
+                                }) }}">
+                                    <button class="btn btn-danger">Verwijderen</button>
+                                </a></td>
+                        </tr>
+                    {% endfor %}
+                            </table>
+                    <a href="{{ path('medewerker_medicijn_new') }}">
+                        <button class="btn btn-danger">Toevoegen</button>
+                    </a>
+                        </article>
+                    </section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_home') }}">Healthone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_medicijnen') }}">Medicijnen</a>
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('app_admin_recepten') }}">Recepten</a>
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_patienten') }}">Patienten</a>
+    </nav>
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+    <div class="container">
+        <a class="main-article-link" href="{{ path('admin_home') }}">
+            <div class="main-article">
+                <img src="{{ asset('images/ee3.jpg') }}" alt="">
+                <h1 class="text-center">Welcome to Healthone</h1>
+            </div>
+        </a>
+    </div>
+{% endblock %}

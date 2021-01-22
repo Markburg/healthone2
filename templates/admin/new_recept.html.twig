@@ -1,0 +1,14 @@
+{% extends'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Recept toevoegen</h1>
+
+                {{ form_start(receptForm, {'attr': {'novalidate': 'novatidate'}}) }}
+                {{ form_widget(receptForm) }}
+                {{ form_end(receptForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for msg in app.session.flashBag.get('succes') %}
-        <div class="alert alert-success">
-            {{ msg }}
-        </div>
-    {% endfor %}
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_home') }}">Healthone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_medicijnen') }}">Medicijnen</a>
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('app_admin_recepten') }}">Recepten</a>
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('admin_patienten') }}">Patienten</a>
+    </nav>
     <section>
         <article>
             <h3>Er zijn {{ patienten|length }} patienten</h3>
@@ -25,12 +29,12 @@
                         <td> {{patient.adress }} </td>
                         <td> {{patient.postcode }} </td>
                         <td> {{patient.woonplaats }} </td>
-                        <td><a href="{{ path('patient_edit', {
+                        <td><a href="{{ path('admin_patient_edit', {
                                 id: patient.id
                             }) }}">
                                 <button class="btn btn-danger">Bewerken</button>
                             </a></td>
-                        <td><a href="{{ path('delete_medicijn', {
+                        <td><a href="{{ path('admin_delete_patient', {
                                 id: patient.id
                             }) }}">
                                 <button class="btn btn-danger">Verwijderen</button>
